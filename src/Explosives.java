@@ -6,30 +6,31 @@ public class Explosives{
     public int nb_assign = 0;
     public String [][] assign = new String[30][2];
  
-    /*@ public invariant // Prop 1
+    /*@ public invariant // Prop 1 : le nombre d'éléments incompatibles doit être compris entre 0 et 50 exclu
       @ (0 <= nb_inc && nb_inc < 50);
       @*/
-    /*@ public invariant // Prop 2
+    /*@ public invariant // Prop 2 : le nombre d'éléments assignés doit être compris entre 0 et 30 exclu
       @ (0 <= nb_assign && nb_assign < 30);
       @*/
-    /*@ public invariant // Prop 3
+    /*@ public invariant // Prop 3 : tous les éléments (type String) dans le double tableau incomp doivent commencer par "Prod"
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @         incomp[i][0].startsWith("Prod") && incomp[i][1].startsWith("Prod"));
       @*/
-    /*@ public invariant // Prop 4
+    /*@ public invariant // Prop 4 :	Tous les String de la première colonne de assign (assign[i][0]) doivent commencer par "Bat"
+      @			 // 		Tous les String de la deuxième colonne de assign (assign[i][1]) doivent commencer par "Prod"
       @ (\forall int i; 0 <= i && i < nb_assign; 
       @         assign[i][0].startsWith("Bat") && assign[i][1].startsWith("Prod"));
       @*/
-    /*@ public invariant // Prop 5
+    /*@ public invariant // Prop 5 : Un élément ne peut pas apparaitre incompatible avec lui même dans le tableau incomp
       @ (\forall int i; 0 <= i && i < nb_inc; !(incomp[i][0]).equals(incomp[i][1]));
       @*/
-    /*@ public invariant // Prop 6
+    /*@ public invariant // Prop 6 : Si un élément i apparait incompatible avec un autre j, alors j apparait incompatible à i dans incomp
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @        (\exists int j; 0 <= j && j < nb_inc; 
       @           (incomp[i][0]).equals(incomp[j][1]) 
       @              && (incomp[j][0]).equals(incomp[i][1]))); 
       @*/
-    /*@ public invariant // Prop 7
+    /*@ public invariant // Prop 7 : Tous les élément assignés à un même batiments ne doivent pas être incompatible 2 à 2
       @ (\forall int i; 0 <= i &&  i < nb_assign; 
       @     (\forall int j; 0 <= j && j < nb_assign; 
       @        (i != j && (assign[i][0]).equals(assign [j][0])) ==>
