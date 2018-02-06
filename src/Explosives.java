@@ -30,7 +30,7 @@ public class Explosives{
       @           (incomp[i][0]).equals(incomp[j][1]) 
       @              && (incomp[j][0]).equals(incomp[i][1]))); 
       @*/
-    /*@ public invariant // Prop 7 : Tous les élément assignés à un même batiments ne doivent pas être incompatible 2 à 2
+    /*@ public invariant // Prop 7 : Tous les éléments assignés à un même batiments ne doivent pas être incompatible 2 à 2
       @ (\forall int i; 0 <= i &&  i < nb_assign; 
       @     (\forall int j; 0 <= j && j < nb_assign; 
       @        (i != j && (assign[i][0]).equals(assign [j][0])) ==>
@@ -39,7 +39,8 @@ public class Explosives{
       @              || (!(assign[j][1]).equals(incomp[k][1])))));
       @*/
 
-
+    //@ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod"));
+    //@ requires (!prod1.equals(prod2));
     public void add_incomp(String prod1, String prod2){
 	incomp[nb_inc][0] = prod1;
 	incomp[nb_inc][1] = prod2;
@@ -47,6 +48,9 @@ public class Explosives{
 	incomp[nb_inc+1][0] = prod2;
 	nb_inc = nb_inc+2;
      }
+    
+    //@ requires (prod.startsWith("Prod") && bat.startsWith("Bat"));
+    //// @ requires (\forall int i; 0 <= i && i < nb_assign; if(assign[i][0].equals(bat)){);
     public void add_assign(String bat, String prod){
 	assign[nb_assign][0] = bat;
 	assign[nb_assign][1] = prod;

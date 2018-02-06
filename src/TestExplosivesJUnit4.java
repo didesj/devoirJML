@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.jmlspecs.utils.JmlAssertionError;
 import org.junit.AfterClass;
@@ -52,7 +52,7 @@ public class TestExplosivesJUnit4 {
 			e.add_assign("Bat_1","Prod_Dyna");
 			e.add_assign("Bat_1","Prod_Nitro");
 			e.add_assign("Bat_2","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Glycerine");
+			e.add_assign("Bat_2","Prod_Glycerine");
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -63,7 +63,7 @@ public class TestExplosivesJUnit4 {
 		try{
 			e=new Explosives();
 			e.nb_inc = 50;
-			skip();
+			e.skip();
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -74,7 +74,7 @@ public class TestExplosivesJUnit4 {
 		try{
 			e=new Explosives();
 			e.nb_assign = 30;
-			skip();
+			e.skip();
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -121,8 +121,9 @@ public class TestExplosivesJUnit4 {
 			e=new Explosives();
 			e.add_incomp("Prod_Nitro","Prod_Glycerine");
 			e.add_incomp("Prod_Dyna","Prod_Mite");
-			e.incomp[nb_incomp-1] = null;
-			skip();
+			e.incomp[e.nb_inc-1][0] = null;
+			e.incomp[e.nb_inc-1][1] = null;
+			e.skip();
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -136,8 +137,8 @@ public class TestExplosivesJUnit4 {
 			e.add_incomp("Prod_Dyna","Prod_Mite");
 			e.add_assign("Bat_1","Prod_Dyna");
 			e.add_assign("Bat_2","Prod_Nitro");
-			e.add_assign("Bat_2","Prod_Mite");
-			e.add_assign("Bat_1","Prod_Glycerine");
+			e.add_assign("Bat_1","Prod_Mite");
+			e.add_assign("Bat_2","Prod_Glycerine");
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
