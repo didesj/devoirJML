@@ -49,13 +49,32 @@ public class Explosives{
 	nb_inc = nb_inc+2;
      }
     
-    //@ requires (prod.startsWith("Prod") && bat.startsWith("Bat"));
-    //// @ requires (\forall int i; 0 <= i && i < nb_assign; if(assign[i][0].equals(bat)){);
+    //@ requires prod.startsWith("Prod") && bat.startsWith("Bat");
+    //@ requires batComp(bat, prod);
     public void add_assign(String bat, String prod){
 	assign[nb_assign][0] = bat;
 	assign[nb_assign][1] = prod;
 	nb_assign = nb_assign+1;
     }
+    
+    public /*@ pure helper @*/ boolean batComp(String bat, String prod) {
+    		for(int i = 0; i<nb_assign; i++) {
+    			if(assign[i][0].equals(bat) && !prodComp(assign[i][1], prod)) {
+    				return false;
+    			}
+    		}
+    		return true;
+    }
+    
+    public /*@ pure helper @*/ boolean prodComp(String prod1, String prod2){
+    		for(int i = 0; i<nb_inc; i++) {
+    			if((incomp[i][0].equals(prod1) || incomp[i][0].equals(prod2)) && ((incomp[i][1].equals(prod1) || incomp[i][1].equals(prod2)))) {
+    				return false;
+    			}
+    		}
+    		return true;
+    }
+    
     public void skip(){
     }
 }
