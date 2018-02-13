@@ -91,6 +91,16 @@ public class TestExplosivesJUnit4 {
 	}
 	
 	@Test
+	public void  testSequence_prop_3_2() {
+		try{
+			e=new Explosives();
+			e.add_incomp(null,null);
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
 	public void  testSequence_prop_4() {
 		try{
 			e=new Explosives();
@@ -100,6 +110,19 @@ public class TestExplosivesJUnit4 {
 			e.add_assign("Pat_1","Prod_Nitro");
 			e.add_assign("Bat_2","Psod_Mite");
 			e.add_assign("Bat_2","Prod_Glycerine");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testSequence_prop_4_2() {
+		try{
+			e=new Explosives();
+			e.add_assign("bat_1","Prod_Dyna");
+			e.add_assign(null,"Prod_Nitro");
+			e.add_assign("Bat_2","Psod_Mite");
+			e.add_assign("Bat_2",null);
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  
@@ -116,16 +139,26 @@ public class TestExplosivesJUnit4 {
 	}
 	
 	@Test
+	public void  testSequence_prop_5_2() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_","Prod_");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
 	public void  testSequence_prop_6() {
 		try{
 			e=new Explosives();
 			e.add_incomp("Prod_Nitro","Prod_Glycerine");
 			e.add_incomp("Prod_Dyna","Prod_Mite");
 
-			e.incomp[e.nb_inc-1] = null;
-
-			//e.incomp[e.nb_inc-1][0] = null;
-			//e.incomp[e.nb_inc-1][1] = null;
+			e.nb_inc--;
+			e.incomp[e.nb_inc][0] = null;
+			e.incomp[e.nb_inc][1] = null;
+			
 			e.skip();
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
@@ -142,6 +175,22 @@ public class TestExplosivesJUnit4 {
 			e.add_assign("Bat_2","Prod_Nitro");
 			e.add_assign("Bat_1","Prod_Mite");
 			e.add_assign("Bat_2","Prod_Glycerine");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testSequence_prop_7_2() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Nitro","Prod_Glycerine");
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_1","Prod_Nitro");
+			e.add_assign("Bat_2","Prod_Mite");
+			e.add_assign("Bat_2","Prod_Glycerine");
+			e.add_incomp("Prod_Mite","Prod_Glycerine");
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  

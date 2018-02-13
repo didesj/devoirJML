@@ -63,6 +63,7 @@ public class Explosives{
     
     //@ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod"));
     //@ requires (!prod1.equals(prod2));
+    //@ requires !memeBat(prod1,prod2);
     public void add_incomp(String prod1, String prod2){
     	histoComp[1]=nb_inc;
 		incomp[nb_inc][0] = prod1;
@@ -81,7 +82,20 @@ public class Explosives{
 	nb_assign = nb_assign+1;
     }
     
-    public /*@ pure helper @*/ boolean batComp(String bat, String prod) {
+    private /*@ spec_public pure helper @*/ boolean memeBat(String prod1, String prod2) {
+    		for(int i = 0; i<nb_assign; i++) {
+    			if(assign[i][1].equals(prod1)) {
+    				for(int j = 0; j<nb_assign; j++) {
+    					if(assign[j][0].equals(assign[i][0]) && assign[j][1].equals(prod2)) {
+    						return true;
+    					}
+    				}
+    			}
+    		}
+    		return false;
+    }
+    
+    private /*@ spec_public pure helper @*/ boolean batComp(String bat, String prod) {
     		for(int i = 0; i<nb_assign; i++) {
     			if(assign[i][0].equals(bat) && !prodComp(assign[i][1], prod)) {
     				return false;
@@ -90,7 +104,7 @@ public class Explosives{
     		return true;
     }
     
-    public /*@ pure helper @*/ boolean prodComp(String prod1, String prod2){
+    private /*@ spec_public pure helper @*/ boolean prodComp(String prod1, String prod2){
     		for(int i = 0; i<nb_inc; i++) {
     			if((incomp[i][0].equals(prod1) || incomp[i][0].equals(prod2)) && ((incomp[i][1].equals(prod1) || incomp[i][1].equals(prod2)))) {
     				return false;
