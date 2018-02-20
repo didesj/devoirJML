@@ -195,6 +195,22 @@ public class TestExplosivesJUnit4 {
 				handleJMLAssertionError(e);		
 		}  
 	}
+	
+	@Test
+	public void  testSequence_prop_8() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Nitro","Prod_Glycerine");
+			e.add_incomp("Prod_Dyna","Prod_Mite");
+			e.add_assign("Bat_1","Prod_Dyna");
+			e.add_assign("Bat_1","Prod_Nitro");
+			e.add_assign("Bat_2","Prod_Mite");
+			e.add_assign("Bat_2","Prod_Glycerine");
+			e.add_assign("Bat_2","Prod_Glycerine");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
 
 
 }

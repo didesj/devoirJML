@@ -7,6 +7,7 @@ public class Explosives{
     public int nb_assign = 0;
     public String [][] assign = new String[30][2];
     
+    
     public Explosives() {
 		// TODO Auto-generated constructor stub
     	histoComp[0] = 0;
@@ -46,20 +47,34 @@ public class Explosives{
       @*/
     
     /*@ public invariant // Prop 8 : Toutes les lignes du tableau des affectations sont différents deux à deux
-      @ (\forall int i; 0 <= i &&  i < nb_assign-1;
-      @  	(\forall int j; 1 <= j && j < nb_assign;
-      @			!(assign[i][0].equals(assign[j][0])) && !(assign[i][1].equals(assign[j][1]))));
+      @ (\forall int i; 0 <= i &&  i < nb_assign;
+      @  	(\forall int j; 0 <= j && j < nb_assign;
+      @			(i==j) || !((assign[i][0].equals(assign[j][0])) && (assign[i][1].equals(assign[j][1]))) ));
       @*/
     
     
     /*@ public invariant // Prop 9 : Un produit ne peut pas être stocké dans plus de trois bâtiments
     @ (\forall int i; 0 <= i &&  i < nb_assign;
-    @		bonStock(assign[i][1]));
+    @ 	bonStock(assign[i][1]));
     @*/
     
     /*@ public invariant // Prop 10 : Le nombre d'incompatibilités ne peut jamais diminuer
     @		invarNbinc();
     @*/
+
+    
+    public /*@ pure helper @*/  boolean bonStock(String prod){
+	    	int compt = 0;
+	    	for(int i = 0 ;i < nb_assign;i++){
+	    		if(assign[i][1].equals(prod)){
+	    			compt ++;
+	    		}
+	    	}
+	    	if(compt >= 3){
+	    		return false;
+	    	}
+	    	return true;	
+	}
     
     //@ requires (prod1.startsWith("Prod") && prod2.startsWith("Prod"));
     //@ requires (!prod1.equals(prod2));
@@ -112,19 +127,7 @@ public class Explosives{
     		}
     		return true;
     }
-    
-    public /*@ pure helper @*/  boolean bonStock(String prod){
-    	int compt = 0;
-    	for(int i = 0 ;i < nb_assign;i++){
-    		if(assign[i][1].equals(prod)){
-    			compt ++;
-    		}
-    	}
-    	if(compt >= 3){
-    		return false;
-    	}
-    	return true;	
-    } 
+     
     
     public /*@ pure helper @*/ boolean invarNbinc() {
     	if(histoComp[0] <= histoComp[1]){
