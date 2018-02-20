@@ -155,9 +155,8 @@ public class TestExplosivesJUnit4 {
 			e.add_incomp("Prod_Nitro","Prod_Glycerine");
 			e.add_incomp("Prod_Dyna","Prod_Mite");
 
-			e.nb_inc--;
-			e.incomp[e.nb_inc][0] = null;
-			e.incomp[e.nb_inc][1] = null;
+			e.incomp[e.nb_inc-1][0] = "Prod_Mite_2";
+			e.incomp[e.nb_inc-1][1] = "Prod_Dyna_2";
 			
 			e.skip();
 		} 	catch(JmlAssertionError e){
@@ -207,6 +206,20 @@ public class TestExplosivesJUnit4 {
 			e.add_assign("Bat_2","Prod_Mite");
 			e.add_assign("Bat_2","Prod_Glycerine");
 			e.add_assign("Bat_2","Prod_Glycerine");
+		} 	catch(JmlAssertionError e){
+				handleJMLAssertionError(e);		
+		}  
+	}
+	
+	@Test
+	public void  testSequence_prop_9() {
+		try{
+			e=new Explosives();
+			e.add_incomp("Prod_Nitro","Prod_Glycerine");
+			e.add_assign("Bat_1","Prod_Glycerine");
+			e.add_assign("Bat_2","Prod_Glycerine");
+			e.add_assign("Bat_3","Prod_Glycerine");
+			e.add_assign("Bat_4","Prod_Glycerine");
 		} 	catch(JmlAssertionError e){
 				handleJMLAssertionError(e);		
 		}  

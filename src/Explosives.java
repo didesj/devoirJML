@@ -2,7 +2,7 @@
 
 public class Explosives{
     public int nb_inc = 0;
-    public int [] histoComp = new int[2];
+    public int histoNbComp = 0;
     public String [][] incomp = new String[50][2];
     public int nb_assign = 0;
     public String [][] assign = new String[30][2];
@@ -10,8 +10,6 @@ public class Explosives{
     
     public Explosives() {
 		// TODO Auto-generated constructor stub
-    	histoComp[0] = 0;
-    	histoComp[1] = 0;
 	}
     /*@ public invariant // Prop 1 : le nombre d'éléments incompatibles doit être compris entre 0 et 50 exclu
       @ (0 <= nb_inc && nb_inc < 50);
@@ -31,12 +29,14 @@ public class Explosives{
     /*@ public invariant // Prop 5 : Un élément ne peut pas apparaitre incompatible avec lui même dans le tableau incomp
       @ (\forall int i; 0 <= i && i < nb_inc; !(incomp[i][0]).equals(incomp[i][1]));
       @*/
+
     /*@ public invariant // Prop 6 : Si un élément i apparait incompatible avec un autre j, alors j apparait incompatible à i dans incomp
       @ (\forall int i; 0 <= i && i < nb_inc; 
       @        (\exists int j; 0 <= j && j < nb_inc; 
       @           (incomp[i][0]).equals(incomp[j][1]) 
       @              && (incomp[j][0]).equals(incomp[i][1]))); 
       @*/
+    
     /*@ public invariant // Prop 7 : Tous les éléments assignés à un même batiments ne doivent pas être incompatible 2 à 2
       @ (\forall int i; 0 <= i &&  i < nb_assign; 
       @     (\forall int j; 0 <= j && j < nb_assign; 
@@ -54,13 +54,13 @@ public class Explosives{
     
     
     /*@ public invariant // Prop 9 : Un produit ne peut pas être stocké dans plus de trois bâtiments
-    @ (\forall int i; 0 <= i &&  i < nb_assign;
-    @ 	bonStock(assign[i][1]));
-    @*/
+      @ (\forall int i; 0 <= i &&  i < nb_assign;
+      @ 		bonStock(assign[i][1]));
+      @*/
     
-    /*@ public invariant // Prop 10 : Le nombre d'incompatibilités ne peut jamais diminuer
-    @		invarNbinc();
-    @*/
+    /*@ public constraint // Prop 10 : Le nombre d'incompatibilités ne peut jamais diminuer
+      @		\old(nb_inc)<=nb_inc;
+      @*/
 
     
     public /*@ pure helper @*/  boolean bonStock(String prod){
@@ -80,13 +80,12 @@ public class Explosives{
     //@ requires (!prod1.equals(prod2));
     //@ requires !memeBat(prod1,prod2);
     public void add_incomp(String prod1, String prod2){
-    	histoComp[1]=nb_inc;
+    		histoNbComp=nb_inc;
 		incomp[nb_inc][0] = prod1;
 		incomp[nb_inc][1] = prod2;
 		incomp[nb_inc+1][1] = prod1;
 		incomp[nb_inc+1][0] = prod2;
 		nb_inc = nb_inc+2;
-		histoComp[0]=nb_inc;
      }
     
     //@ requires prod.startsWith("Prod") && bat.startsWith("Bat");
@@ -128,13 +127,6 @@ public class Explosives{
     		return true;
     }
      
-    
-    public /*@ pure helper @*/ boolean invarNbinc() {
-    	if(histoComp[0] <= histoComp[1]){
-    		return true;
-    	}
-    	return false;
-    }
     
     public void skip(){
     }
