@@ -111,20 +111,50 @@ public class Explosives{
     
     private /*@ spec_public pure helper @*/ boolean batComp(String bat, String prod) {
     		for(int i = 0; i<nb_assign; i++) {
-    			if(assign[i][0].equals(bat) && !prodComp(assign[i][1], prod)) {
+    			if(assign[i][0].equals(bat) && !compatible(assign[i][1], prod)) {
     				return false;
     			}
     		}
     		return true;
     }
     
-    private /*@ spec_public pure helper @*/ boolean prodComp(String prod1, String prod2){
+    private /*@ spec_public pure helper @*/ boolean compatible(String prod1, String prod2){
     		for(int i = 0; i<nb_inc; i++) {
     			if((incomp[i][0].equals(prod1) || incomp[i][0].equals(prod2)) && ((incomp[i][1].equals(prod1) || incomp[i][1].equals(prod2)))) {
     				return false;
     			}
     		}
     		return true;
+    }
+    
+    //@ ensures \result.startsWith("Bat");
+    public String findBat (String prod) {
+    		String batCheck[] = new String[30]; // batiments déjà verifié
+    		int index = 0;
+    		String bat;
+    		boolean batAllreadyCheck = false;
+    		for(int i = 0; i < nb_assign; i++) {
+    			for(int j = 0; j <index; j++) {
+    				if(assign[i][0].equals(batCheck[j])) {
+    					batAllreadyCheck = true;
+    				}
+    			}
+    			if(!batAllreadyCheck) { // si le batiment n'a pas été encore vérifié
+    				bat = assign[i][0];
+    				boolean batOk = true;
+	    			for(int k = 0; k < nb_assign; k++) {
+	    				if(assign[k][0].equals(bat) && !compatible(prod, assign[k][1])) {
+	    					batOk = false;
+	    				}
+	    			}
+	    			if(batOk) {
+	    				return bat;
+	    			}
+	    			batCheck[index] = bat;
+	    			index++;
+    			}
+    		}
+    		return "Bat_"+prod;
     }
      
     
