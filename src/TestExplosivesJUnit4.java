@@ -58,27 +58,6 @@ public class TestExplosivesJUnit4 {
 		}  
 	}
 	
-	@Test
-	public void  testSequence_prop_1() {
-		try{
-			e=new Explosives();
-			e.nb_inc = 50;
-			e.skip();
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
-	}
-	
-	@Test
-	public void  testSequence_prop_2() {
-		try{
-			e=new Explosives();
-			e.nb_assign = 30;
-			e.skip();
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
-	}
 	
 	@Test
 	public void  testSequence_prop_3() {
@@ -148,21 +127,6 @@ public class TestExplosivesJUnit4 {
 		}  
 	}
 	
-	@Test
-	public void  testSequence_prop_6() {
-		try{
-			e=new Explosives();
-			e.add_incomp("Prod_Nitro","Prod_Glycerine");
-			e.add_incomp("Prod_Dyna","Prod_Mite");
-
-			e.incomp[e.nb_inc-1][0] = "Prod_Mite_2";
-			e.incomp[e.nb_inc-1][1] = "Prod_Dyna_2";
-			
-			e.skip();
-		} 	catch(JmlAssertionError e){
-				handleJMLAssertionError(e);		
-		}  
-	}
 	
 	@Test
 	public void  testSequence_prop_7() {
